@@ -1,13 +1,13 @@
 var express = require("express");
+var cookieParser = require('cookie-parser');
 var path = require("path");
-var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
 var session = require("express-session");
 var passport = require("passport");
-var LocalStrategy = require("passport-local"), Strategy;
+var LocalStrategy = require("passport-local").Strategy;
 var mongo = require("mongodb");
 var mongoose = require("mongoose");
 
@@ -30,16 +30,16 @@ app.set("view engine", "handlebars");
 // set up the body parser and cookie parser middlewaregit
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 
+app.use(cookieParser());
 // set up the static folder for publically accessable content e.g images/ js 
 app.use(express.static(path.join(__dirname, 'public')));
 
 // create the express session
 app.use(session({
 	secret: 'secret',
-	saveUnitialized: true,
-	resave: true
+	resave: true,
+    saveUninitialized: true
 }));
 
 //initalising the passport module
@@ -48,20 +48,20 @@ app.use(passport.session());
 
 // code was utilised and adapted from: https://github.com/ctavan/express-validator#middleware-options
 app.use(expressValidator({
-	errorFormatter: function(param, msg, value) {
-	  var namespace = param.split('.')
-		, root    = namespace.shift()
-		, formParam = root;
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
 
-	while(namespace.length) {
-		formParam += '[' + namespace.shift() + ']';
-	}
-	return {
-			param : formParam,
-			msg   : msg,
-			value : value
-		};
-	}
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
 }));
 
 // load the connect flash middleware
@@ -76,12 +76,12 @@ app.use(function(req, res, next){
 });
 
 // next up add the middleware for the route files
-app.use('/', routers);
+app.use('/', routes);
 app.use('/users', users);
 
 //set the port and start the server!
 app.set('port', (process.env.PORT || 3000));
 
-app.listen(app.get(), function(){
-	console.log('Server running on port 3000')	
+app.listen(app.get('port'), function(){
+	console.log('Server running on port 3000');
 });

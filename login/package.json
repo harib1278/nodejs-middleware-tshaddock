@@ -16,7 +16,7 @@
     "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "*",
-    "cookie-parser": "^1.4.1",
+    "cookie-parser": "^1.4.3",
     "express": "*",
     "express-handlebars": "*",
     "express-messages": "*",
@@ -26,6 +26,7 @@
     "mongoose": "*",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "path-to-regexp": "^1.7.0"
   }
 }
