@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+var express 	  = require('express');
+var router 		  = express.Router();
+var passport 	  = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
  
@@ -54,7 +56,60 @@ router.post('/register', function(req, res){
 
 		res.redirect('/users/login');
 	}
-});	
+});
+
+//definition of the local strategy
+passport.use(new LocalStrategy(
+	function(username, password, done){
+		User.getUserByUsername(username, function(err, user){
+			if(err){
+				throw err;
+			}
+			if(!user){
+				return done(null, false, {message: 'Incorrect username.'});
+			}
+
+			User.comparePassword(password, user.password, function(err, isMatch){
+				if(err){
+					throw err;
+				}
+				if(isMatch){
+					return done(null, user);
+				} else{
+					return done(null, false, {message: 'Invalid password'});
+				}
+			});
+		});
+	}
+
+));
+
+//serlise user
+passport.serializeUser(function(user, done){
+	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done){
+	User.getUserById(id, function(err, user){
+		done(err, user);
+	});
+});
+
+
+
+//use the local strategy for passport as the db is locally hosted
+router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}), function(req, res){
+		console.log(req);
+		res.redirect('/');
+});
+
+router.get('/logout', function(req, res){
+	req.logout();
+
+	req.flash('success_msg', 'You have logged out.');
+
+	res.redirect('/users/login');
+});
 
 
 module.exports = router;

@@ -72,8 +72,14 @@ app.use(function(req, res, next){
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg   = req.flash('error_msg');
 	res.locals.error 	   = req.flash('error');
+	//set user variable for front end logic
+	res.locals.user 	   = req.user || null;
+
 	next();
 });
+
+
+
 
 // next up add the middleware for the route files
 app.use('/', routes);
