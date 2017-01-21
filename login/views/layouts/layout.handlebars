@@ -67,15 +67,16 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/">Home</a>
-                    </li>
+                    </li>                    
                     {{#if user}}
+                        <li class="page-scroll">
+                            <a href="/">Dashboard</a>
+                        </li>
                         <li class="page-scroll">
                             <a href="/users/logout">Log out</a>
                         </li>
                     {{else}}
+                        
                         <li class="page-scroll">
                             <a href="/users/register">Register</a>
                         </li>
@@ -95,29 +96,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="/img/profile.png" alt="">
-                    <div class="intro-text">
-                        <span class="name">Welcome to BookFace!</span>
-                        <hr class="star-light">
-                        <span class="skills">
+                    
 
-                        	{{#if success_msg}}
-                        		<div class="alert alert-success">{{success_msg}}</div>	                        		
-                        	{{/if}}
+                	{{#if success_msg}}
+                		<div class="alert alert-success">{{success_msg}}</div>	                        		
+                	{{/if}}
 
-                        	{{#if error_msg}}
-                        		<div class="alert alert-danger">{{error_msg}}</div>
-                        	{{/if}}
+                	{{#if error_msg}}
+                		<div class="alert alert-danger">{{error_msg}}</div>
+                	{{/if}}
 
-                        	{{#if error}}
-                        		<div class="alert alert-danger">{{error}}</div>
-                        	{{/if}}
+                	{{#if error}}
+                		<div class="alert alert-danger">{{error}}</div>
+                	{{/if}}
 
-                        	<i><span>{{{body}}}</span></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
+                	<i><span>{{{body}}}</span></i>
+                        
         </div>
     </header>
 
