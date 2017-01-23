@@ -98,7 +98,12 @@ passport.deserializeUser(function(id, done){
 
 
 //use the local strategy for passport as the db is locally hosted
-router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}), function(req, res){
+router.post('/login', passport.authenticate('local', {	
+		successRedirect: '/', 
+		failureRedirect: '/users/login', 
+		failureFlash: true
+
+	}), function(req, res){
 		console.log(req);
 		res.redirect('/');
 });

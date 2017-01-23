@@ -16,6 +16,7 @@ var db = mongoose.connection;
 
 var routes = require("./routes/index");
 var users = require("./routes/users");
+var books = require("./routes/books");
 
 
 //initialise applicaiton
@@ -72,7 +73,7 @@ app.use(function(req, res, next){
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg   = req.flash('error_msg');
 	res.locals.error 	   = req.flash('error');
-	//set user variable for front end logic
+	//set user data for front end logic
 	res.locals.user 	   = req.user || null;
 
 	next();
@@ -84,6 +85,8 @@ app.use(function(req, res, next){
 // next up add the middleware for the route files
 app.use('/', routes);
 app.use('/users', users);
+app.use('/books', books);
+
 
 //set the port and start the server!
 app.set('port', (process.env.PORT || 3000));
