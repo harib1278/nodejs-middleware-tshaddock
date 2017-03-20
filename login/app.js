@@ -65,6 +65,7 @@ app.use(expressValidator({
   }
 }));
 
+
 // load the connect flash middleware
 app.use(flash());
 

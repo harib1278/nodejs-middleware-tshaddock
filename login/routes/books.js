@@ -1,11 +1,12 @@
 var express 	= require('express');
-var router     	= express.Router();
+var router     	= express();
 var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
 var moment      = require('moment');
 
 //system specific declarations 
 var Author      = require('../models/author');
+var reqLog      = require('../app.js');
 
 
 router.route('/authors/:authName/:bookName')
@@ -34,7 +35,7 @@ router.route('/authors/:authName/:bookName')
         });        
     })
 
-    .put(reqLog.reqLog, function(req,res){
+    .put(function(req,res){
 
         if(validate.isEmpty(req.body.comment)) {
             res.send({message: 'Add a comment!'});
