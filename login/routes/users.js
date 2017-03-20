@@ -3,6 +3,7 @@ var router 		  = express.Router();
 var passport 	  = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+//system specific declarations 
 var User = require('../models/user');
  
 
