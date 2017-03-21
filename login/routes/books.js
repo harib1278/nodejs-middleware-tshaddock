@@ -1,110 +1,116 @@
 var express 	= require('express');
-var router     	= express();
+var router		= express();
 var bodyParser  = require('body-parser');
-var mongoose    = require('mongoose');
-var moment      = require('moment');
+var mongoose	= require('mongoose');
+var moment	    = require('moment');
 
-//system specific declarations 
-var Author      = require('../models/author');
-var reqLog      = require('../app.js');
+//system specific declarations - the books schema has been included as part of the main authors schema for speed of development
+var Author		= require('../models/author');
 
-
+//it is presumed that this seperate middleware app would be running on a seperate server in production with a whitelisted IP
 router.route('/authors/:authName/:bookName')
 
-    .get(function(req,res){
-        Author.findOne({ 
-        	'authBooks.bookName': req.params.bookName 
-        }, function(err,author){
-            if (author !== null) {      
-                if(err){
-                    res.send(err);
-                    console.log(err);
-                } else {
-                    checkBook(author,req.params.bookName);                    
+	.get(function(req,res){
 
-                    res.render('index', {
-                        pageTitle: thisBook.bookName,
-                        pageID: 'book',
-                        book : thisBook,
-                        authName : author.authName
-                    });
-                }
-            } else {
-                res.send('error');
-            }
-        });        
-    })
-
-    .put(function(req,res){
-
-        if(validate.isEmpty(req.body.comment)) {
-            res.send({message: 'Add a comment!'});
-        } else {
-            var comment = {
-                comment: req.body.comment,
-                user: req.user.username
-            };
-
-            var bookName = req.params.bookName;
-            var authName = req.params.authName;
-
-            Author.findOneAndUpdate({ 
-            		'authBooks.bookName': bookName
-            	},{ 
-            		$push: { 
-            			'authBooks.$.bookComments' : comment 
-            		} 
-            	},{ 
-            		new: true
-            	},function (err,author){
-                if(err){
-                    res.send(err);
-                    console.log(err);
+		Author.findOne({ 
+		'authBooks.bookName': req.params.bookName 
+		}, function(err,author){
+			if (author !== null) {      
+				if(err){
+					res.send(err);
+					console.log(err);
 				} else {
-                	console.log('Comment added.');
-					res.send({redirect: '/authors/' + authName + '/' + bookName });
-                }
-            });
-        }     
+					checkBook(author,req.params.bookName);                    
 
-    })
+					res.render('index', {
+						pageTitle: thisBook.bookName,
+						pageID: 'book',
+						book : thisBook,
+						authName : author.authName
+					});
+				}
+			} else {
+				res.send('Error: Problem retrieving books');
+			}
+		});
+	})
 
-    .delete(function(req,res){
+	.put(function(req,res){
 
-        Author.findOneAndUpdate({
-        	'authBooks.bookName': req.params.bookName
-        },{
-        	$pull: {
-        		'authBooks': { 
-        			bookName : req.params.bookName 
-        		}
-        	}
-        },function (err,author){
-            if(err) {
-                res.send({
-                    code: 6001,
-                    message:'Problem deleting book'
-                });
-                console.log('Couldnt find book');
-            } else {
-                 console.log('Book removed.');
-                 res.send({
-                    code: 6001,
-                    message:'Problem saving book',
-                    authName : author.authName
-                });
-            }
-        });
-    })
+		if(validate.isEmpty(req.body.comment)) {
+			res.send({message: 'Add a comment'});
+		} else {
+			var comment = {
+				comment: req.body.comment,
+				user: req.user.username
+		};
 
+			var bookName = req.params.bookName;
+			var authName = req.params.authName;
+
+				Author.findOneAndUpdate({ 
+					'authBooks.bookName': bookName
+				},{
+					$push: { 
+						'authBooks.$.bookComments' : comment 
+					}
+			 	},{ 
+					new: true
+				},function (err,author){
+				if(err){
+					res.send(err);
+					console.log(err);
+				} else {
+					console.log('Success: Comment has been added.');
+					res.send({
+						redirect: '/authors/' + authName + '/' + bookName
+					});
+				}
+			});
+		} 
+
+	})
+
+	.delete(function(req,res){
+
+		Author.findOneAndUpdate({
+			'authBooks.bookName': req.params.bookName
+		},{
+			$pull: {
+				'authBooks': { 
+					bookName : req.params.bookName 
+				}
+			}
+		},function (err,author){
+			if(err) {
+				res.send({
+					code: 400,
+					message:'Error: Problem deleting the book'
+				});
+				console.log('Error: Couldnt find book');
+			} else {
+				console.log('Success: Book removed.');
+				res.send({
+					code: 400,
+					message:'Problem saving the book',
+					authName : author.authName
+				});
+			}
+		});
+	})
+
+var port = 3001;
 //server logging
 router.use(function(req, res, next) {
-	console.log(`${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+	console.log(`App - '${port}': ${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
 	next();
 });
 
-router.listen(3001);
+//set the port and start the server!
+router.set('port', (process.env.PORT || port));
 
-console.log("Middleware app running on port 3001");
+router.listen(router.get('port'), function(){
+	console.log(`Books middleware server running on port ${port}`);
+});
 
 module.exports = router;

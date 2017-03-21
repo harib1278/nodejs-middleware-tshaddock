@@ -14,9 +14,10 @@ var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/loginapp");
 var db = mongoose.connection;
 
-var routes = require("./routes/index");
-var users = require("./routes/users");
-var books = require("./routes/books");
+var routes  = require("./routes/index");
+var users   = require("./routes/users");
+var books   = require("./routes/books");
+var authors = require("./routes/authors");
 
 
 //initialise applicaiton
@@ -87,11 +88,13 @@ app.use(function(req, res, next){
 app.use('/', routes);
 app.use('/users', users);
 app.use('/books', books);
+app.use('/authors', authors);
 
 
-//set the port and start the server!
-app.set('port', (process.env.PORT || 3000));
+var port = 3000;
+//server logging
+app.set('port', (process.env.PORT || port));
 
 app.listen(app.get('port'), function(){
-	console.log('Server running on port 3000');
+	console.log(`App server running on port ${port}`);
 });
