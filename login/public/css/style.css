@@ -37,6 +37,9 @@
 	font-size: 0.9em;
 }
 
+.load-comments{
+	margin-top:10px;
+}
 /* Overrides */
 .navbar-custom{
 	padding: 10px 0;

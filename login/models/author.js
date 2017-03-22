@@ -15,7 +15,7 @@ var Author = mongoose.Schema({
         bookName: {
             type: String,
             unique: true
-        }
+        },
         bookDescription: String,
         bookComments: [{
             comment: String,
