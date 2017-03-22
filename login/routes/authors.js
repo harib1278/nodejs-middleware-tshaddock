@@ -19,8 +19,8 @@ var Author = [
 	        bookName: 'sdasdsd',
 	        bookDescription: 'Consectetur adipiscing elit',
 	        bookComments: [{
-	            comment: 'asdasd',
-	            user: 'asdasd',
+	            comment: 'Hello this is a comment',
+	            user: 'Jimbob',
 	            time: 1490189506910
 	        }],
 	        bookRating: {
@@ -155,7 +155,8 @@ router.route('/authors/:authName')
 		if(validate.isEmpty(req.body.bookName)) {
 			errors.push('Error: New book name cannot be blank.');
 		} else {
-			var bookName = req.body.bookName;
+			var bookName 		= req.body.bookName;
+			var bookDescription = req.body.bookDescription;
 		}
 
 		if(validate.isEmpty(errors)) {
@@ -163,7 +164,11 @@ router.route('/authors/:authName')
 			var authBooks = 
 			{
 				bookName : bookName,
-				bookRating : 0
+				bookDescription : bookDescription,
+				bookRating: {
+		            ratingScore: 0,
+		            numberOfRatings: 0
+		        }
 			}
 			
 			Author.findOneAndUpdate({

@@ -41,6 +41,9 @@
 	margin-top:10px;
 }
 
+.comment-time{
+	font-size: 0.6em;
+}
 .custom-container{
     border: 1px solid #fff;
     background-color: #fff;

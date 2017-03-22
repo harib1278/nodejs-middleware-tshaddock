@@ -15,28 +15,62 @@ function dialogueInit(){
 
 function initClickEvents(authors){
    
-    
+    loadCommentDialogue(authors);
+        
+}
+
+function loadCommentDialogue(authors){
     //Load the comments on click of the comments button
     $( "button.load-comments" ).click(function() {
         var authorID = $(this).attr('author-id');
         var bookName = $(this).attr('book-name');
 
-        console.log(bookName);
-        console.log(authorID);
+        //console.log(bookName);
+        //console.log(authorID);
 
-        noty({
-            layout: "topCenter",
-            text: 'Comments for '+bookName+'',
-            buttons: [
-            {
-                addClass: 'btn btn-primary', text: 'Close', onClick: function($noty) {
+        $.each(authors, function(index, author) {
+            if(author.id == authorID){                
+                $.each(author.authBooks, function(index, books) {
+                    
+                    if(books.bookName == bookName){
+                        
+                        $.each(books.bookComments, function(index, comments) {
+                            var time = new Date(comments.time * 1000);
 
-                    $noty.close();
-                }
-            }]
+                            noty({
+
+                                layout: "topCenter",
+                                text: 'Comments for '+bookName+'',
+                                template: 
+                                        '<div class="comment-panel panel-body">'+
+                                            '<div class="text-center"><h5><b>Comments for '+bookName+'</b></h5></div>'+
+                                            '<div class="new-dialogue">'+
+                                                '<p>'+
+                                                    '<i>'+comments.user+'</i>:<br> '+comments.comment + '<br>' +
+                                                    '<span class="comment-time">@ '+time+'</span>' +
+                                                '</p>'+
+                                                '<hr>' +
+                                            '</div>'+   
+                                        '</div>',
+                                buttons: [
+                                {
+                                    addClass: 'btn btn-primary', text: 'Close', onClick: function($noty) {
+
+                                        $noty.close();
+                                    }
+                                }]
+                                
+                            });
+
+                            
+                        });
+                    }
+                });
+            }
         });
 
-    });    
+
+    });
 }
 
 function printAuthorDashboard(authors) {
