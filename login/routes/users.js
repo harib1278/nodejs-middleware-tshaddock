@@ -2,10 +2,12 @@ var express 	  = require('express');
 var router 		  = express.Router();
 var passport 	  = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var cors 		  = require('cors');
 
 //system specific declarations 
 var User = require('../models/user');
  
+router.use(cors());
 
 router.get('/register', function(req, res){
 	res.render('register');
@@ -95,6 +97,7 @@ passport.deserializeUser(function(id, done){
 		done(err, user);
 	});
 });
+
 
 
 

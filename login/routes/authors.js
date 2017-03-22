@@ -3,6 +3,8 @@ var router		= express();
 var bodyParser  = require('body-parser');
 var mongoose	= require('mongoose');
 var moment	    = require('moment');
+//essential to allow for a microservices architecture e.g api on different port/domain to the main app
+var cors 		= require('cors');
 
 //system specific declarations
 var Author		= require('../models/author');
@@ -22,9 +24,23 @@ var Author = [
 	        }],
 	        
 	    }]
+	}, 
+	{
+		id: 13,
+	    authName: 'test new',
+	    authDescription: 'new desc',
+	    authBooks: [{
+	        bookName: 'bew',
+	        bookComments: [{
+	            comment: 'new',
+	            user: 'mrw',
+	            time: 123123123
+	        }],
+	        
+	    }]
 	}
 ];
-
+router.use(cors());
 
 
 //it is presumed that this seperate middleware app would be running on a seperate server in production with a whitelisted IP
@@ -32,14 +48,7 @@ router.route('/authors')
 
     .get(function(req,res){
 
-		Author.find(function(err,authors) {
-			if (err) {
-				res.json(err);
-				console.log(err);
-			} else {
-				res.json(authors);
-			}
-		})
+		res.json(Author);
 
 	})
 
