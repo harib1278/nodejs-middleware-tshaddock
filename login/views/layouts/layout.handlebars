@@ -67,15 +67,12 @@
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
                 <div class="row">
-                    <a class="navbar-brand" href="#page-top">BookFace</a>
+                    <a class="navbar-brand" href="#page-top">BookFace!
+                    {{#if user}}
+                        <br><span class="text-white nav-text">Hi {{user.username}}, welcome back!</span>
+                    {{/if}} 
+                    </a>
                 </div>
-                
-                {{#if user}}
-                <div class="row">
-                    <h5><i><p class="text-white nav-text">Hi {{user.username}}, welcome back!</p></i></h5>
-                </div>
-                {{/if}} 
-                
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

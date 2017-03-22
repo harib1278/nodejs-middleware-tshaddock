@@ -112,7 +112,8 @@ router.route('/authors')
 		if (validate.isEmpty(errors)) {
 			var author = new Author ({
 				authName : authName,
-				authDescription : authDescription
+				authDescription : authDescription,
+				authBooks: []
 			});
 			
 			author.save(function(err) {
@@ -258,15 +259,20 @@ router.route('/authors/:authName/:bookName')
 		});
 	})
 
+	//switch with the author id
+	//
 	.put(function(req,res){
 
 		if(validate.isEmpty(req.body.comment)) {
 			res.send({message: 'Add a comment'});
 		} else {
+			var now = Date.time();
+
 			var comment = {
 				comment: req.body.comment,
-				user: req.user.username
-		};
+				user: req.user.username,
+				time: now
+			};
 
 			var bookName = req.params.bookName;
 			var authName = req.params.authName;
@@ -285,9 +291,14 @@ router.route('/authors/:authName/:bookName')
 					console.log(err);
 				} else {
 					console.log('Success: Comment has been added.');
-					res.send({
-						redirect: '/authors/' + authName + '/' + bookName
-					});
+					var resp = {
+						code: 200,
+						message: 'Success: Comment has been added.'
+					}
+					res.json(resp);
+					//res.send({
+					//	redirect: '/authors/' + authName + '/' + bookName
+					//});
 				}
 			});
 		} 
