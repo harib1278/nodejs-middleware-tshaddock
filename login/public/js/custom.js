@@ -14,9 +14,10 @@ function dialogueInit(){
 }
 
 function initClickEvents(authors){
-   
+    loadNewAuthorDialogue();
     loadCommentsDialogue(authors);
     loadNewBookDialogue(authors);
+    
 }
 
 function loadCommentsDialogue(authors){
@@ -145,7 +146,59 @@ function loadNewBookDialogue(authors){
         $( '.comment-list' ).append( $( 
             '<label for="description">Description:</label><br>'+
             '<form id="usr-comment" name="description">' +
-                '<input type="text" name="comment" class="description-input comment-input">' +                                                    
+                '<textarea type="text" name="comment" class="description-input comment-input"></textarea>' +                                                    
+            '</form>'
+        ));
+
+
+    });
+}
+
+function loadNewAuthorDialogue(){
+    $( ".add-author" ).click(function() {
+       
+        noty({
+
+            layout: "topCenter",
+            text: 'Add new author',
+            closeWith: ['button'],
+            killer: true,
+            template: 
+                    '<div class="comment-panel panel-body">'+
+                        '<div class="text-center"><h5><b>Add new author</b></h5></div>'+
+                        '<div class="new-dialogue">'+
+                            '<div class="comment-list"></div>' +                            
+                        '</div>'+   
+                    '</div>',
+            buttons: [
+                
+                {
+                    addClass: 'btn btn-success', text: 'Add Comment', onClick: function($noty) {
+                        //close without saving
+                        $noty.close();
+                    }
+                },
+                {
+                    addClass: 'btn btn-primary', text: 'Close', onClick: function($noty) {                            
+                        
+                        $noty.close();
+                    }
+                }
+            ]
+            
+        });
+
+        $( '.comment-list' ).append( $( 
+            '<label for="title">Name:</label><br>'+
+            '<form id="usr-comment" name="title">' +
+                '<input type="text" name="comment" class="title-input">' +                                                    
+            '</form>'
+        ));
+
+        $( '.comment-list' ).append( $( 
+            '<label for="description">Description &amp; Biography:</label><br>'+
+            '<form id="usr-comment" name="description">' +
+                '<textarea type="text" name="comment" class="description-input comment-input"></textarea>' +                                                    
             '</form>'
         ));
 
@@ -155,68 +208,78 @@ function loadNewBookDialogue(authors){
 
 function printAuthorDashboard(authors) {
     //console.log(authors);
-    $.each(authors, function(index, author) {
-        if(author.id == null){
-            $( ".content" ).append( $( 
-                '<div class="alert alert-danger"><h4>No books in the db</div></h4>'
-            ));
-        } else {
-            
+    if(authors && authors.length > 0){
+        $.each(authors, function(index, author) {
+            if(author.id == null){
+                $( ".content" ).append( $( 
+                    '<div class="alert alert-danger"><h4>No books in the db</div></h4>'
+                ));
+            } else {
+                
+                //build the dashboard page
 
-            $( '.content' ).append( $( 
-                '<div class="row row-pad" id="book-'+author.id+'"></div>'
-            ));
-
-            $( '#book-'+author.id ).append( $( 
-                '<h4>'+author.authName+'</h4>'
-            ));
-
-            $( '#book-'+author.id ).append( $( 
-                '<p>'+
-                    '<i>'+author.authDescription+'</i>'+
-                '</p>'+                
-                '<p>Books by '+author.authName+':</p>'+
-                '<br>'
-            ));
-
-            //now get the books from the author array
-            var count = 1;
-            $.each(author.authBooks, function(index, book) {
+                $( '.content' ).append( $( 
+                    '<div class="row row-pad" id="book-'+author.id+'"></div>'
+                ));
 
                 $( '#book-'+author.id ).append( $( 
-                    '<div id="book-'+count+'-'+author.id+'" class="col-md-4"></div>'
+                    '<h4>'+author.authName+'</h4>'
                 ));
 
-                $( '#book-'+count+'-'+author.id ).append( $( 
-                    '<h5>'+ book.bookName +'</h5>'
+                $( '#book-'+author.id ).append( $( 
+                    '<p>'+
+                        '<i>'+author.authDescription+'</i>'+
+                    '</p>'+                
+                    '<p>Books by '+author.authName+':</p>'+
+                    '<br>'
                 ));
 
-                $( '#book-'+count+'-'+author.id ).append( $( 
-                    '<p class="book-desc">'+ book.bookDescription +'</p>'
+                //now get the books from the author array
+                var count = 1;
+                $.each(author.authBooks, function(index, book) {
+
+                    $( '#book-'+author.id ).append( $( 
+                        '<div id="book-'+count+'-'+author.id+'" class="col-md-4"></div>'
+                    ));
+
+                    $( '#book-'+count+'-'+author.id ).append( $( 
+                        '<h5>'+ book.bookName +'</h5>'
+                    ));
+
+                    $( '#book-'+count+'-'+author.id ).append( $( 
+                        '<p class="book-desc">'+ book.bookDescription +'</p>'
+                    ));
+
+                    $( '#book-'+count+'-'+author.id ).append( $( 
+                        '<button class="btn btn-success load-comments" author-name="'+author.authName+'" author-id="'+author.id+'"" book-name="'+ book.bookName +'">Comments</button>'
+                    ));
+
+                    count++;
+                });
+
+                $( '.content' ).append( $( 
+                    '<button class="btn btn-success add-book" author-name="'+author.authName+'" author-id="'+author.id+'"">Add new book</button>'
                 ));
 
-                $( '#book-'+count+'-'+author.id ).append( $( 
-                    '<button class="btn btn-success load-comments" author-name="'+author.authName+'" author-id="'+author.id+'"" book-name="'+ book.bookName +'">Comments</button>'
+
+                $( '.content' ).append( $( 
+                    '<div class="row row-pad"><hr></div>'
                 ));
+                
+            }
+        });
 
-                count++;
-            });
-
-            $( '.content' ).append( $( 
-                '<button class="btn btn-success add-book" author-name="'+author.authName+'" author-id="'+author.id+'"">Add new book</button>'
-            ));
-
-
-            $( '.content' ).append( $( 
-                '<div class="row row-pad"><hr></div>'
-            ));
-            
-        }
         
-
-    });
+    } else{
+        $( '.content' ).append( $( 
+            '<div class="row row-pad"><h4>No authors in the database</h4></div>'
+        ));
+    }
+    
+    $( '.content' ).append( $( 
+        '<button class="btn btn-success add-author">Add new author</button>'
+    ));
 
     //only load the click events once the dashboard has been rendered
-
     initClickEvents(authors);
 }

@@ -81,6 +81,7 @@ var Author = [
 	    }]
 	}
 ];
+//var Author = [];
 router.use(cors());
 
 

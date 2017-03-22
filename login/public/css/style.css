@@ -49,6 +49,13 @@
 .comment-input{
 	width: 100%;
 }
+
+.add-author{
+	font-size: 1.75em;
+}
+
+
+
 .custom-container{
     border: 1px solid #fff;
     background-color: #fff;
