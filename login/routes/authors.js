@@ -12,30 +12,71 @@ var Author		= require('../models/author');
 
 var Author = [
 	{
-		id: 12,
-	    authName: 'test au',
-	    authDescription: 'Blah desc',
+		id: 1,
+	    authName: 'Ian Banks',
+	    authDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin aliquet ut massa at fermentum. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
 	    authBooks: [{
 	        bookName: 'sdasdsd',
+	        bookDescription: 'Consectetur adipiscing elit',
 	        bookComments: [{
 	            comment: 'asdasd',
 	            user: 'asdasd',
-	            time: 123123123
+	            time: 1490189506910
 	        }],
+	        bookRating: {
+	            ratingScore: 15,
+	            numberOfRatings: 3
+	        }
 	        
+	    },{
+	    	bookName: 'Blah book',
+	        bookDescription: 'Consectetur adipiscing elit. Proin aliquet ut massa at fermentum',
+	        bookComments: [{
+	            comment: 'asdasd',
+	            user: 'asdasd',
+	            time: 1490189506910
+	        }],
+	        bookRating: {
+	            ratingScore: 15,
+	            numberOfRatings: 3
+	        }
+	    },{
+	    	bookName: 'Blah book 2',
+	        bookDescription: 'Interdum et malesuada fames ac ante ipsum primis in faucibus.',
+	        bookComments: [{
+	            comment: 'asdasd',
+	            user: 'asdasd',
+	            time: 1490189506910
+	        }],
+	        bookRating: {
+	            ratingScore: 15,
+	            numberOfRatings: 3
+	        }
 	    }]
 	}, 
 	{
-		id: 13,
-	    authName: 'test new',
-	    authDescription: 'new desc',
+		id: 2,
+	    authName: 'Issac Asimov',
+	    authDescription: 'Sed ut mauris eu arcu imperdiet facilisis sodales a libero. Aenean pulvinar dolor justo.',
 	    authBooks: [{
-	        bookName: 'bew',
-	        bookComments: [{
-	            comment: 'new',
-	            user: 'mrw',
-	            time: 123123123
-	        }],
+	        bookName: 'Foundation',
+	        bookDescription: 'Eu arcu imperdiet facilisis sodales a libero',
+	        bookComments: [
+	        	{
+		            comment: 'new',
+		            user: 'mrw',
+		            time: 1490189506800
+	        	},
+	        	{
+	        		comment: 'Hello',
+		            user: 'tim',
+		            time: 1490189506810
+	        	}
+	        ],
+	        bookRating: {
+	            ratingScore: 21,
+	            numberOfRatings: 5
+	        }
 	        
 	    }]
 	}

@@ -1,12 +1,47 @@
+.content{	
+	width: 50%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.container-inner{
+	padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.form{
+	width: 75%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.row-pad{
+	padding-bottom: 30px;
+}
+
+
 .text-white{
 	color:white;
 }
+
+
 
 .nav-text{
 	font-size:10px;
 }
 
+/* books */
+.book-desc{
+	font-size: 0.9em;
+}
+
 /* Overrides */
 .navbar-custom{
 	padding: 10px 0;
+}
+
+.name-smaller{
+	font-size: 3em !important;
 }

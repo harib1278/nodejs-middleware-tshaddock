@@ -12,7 +12,11 @@ var Author = mongoose.Schema({
     },
     authDescription: String,
     authBooks: [{
-        bookName: String,
+        bookName: {
+            type: String,
+            unique: true
+        }
+        bookDescription: String,
         bookComments: [{
             comment: String,
             user: String,
@@ -22,9 +26,12 @@ var Author = mongoose.Schema({
             }
         }],
         bookRating: {
-            type: Number,
-            min: 1,
-            max: 10
+            ratingScore: {
+                type: Number
+            },
+            numberOfRatings: {
+                type: Number
+            }
         }
     }]
 });
