@@ -9,13 +9,32 @@ function init(){
     $.getJSON('http://localhost:3001/authors', printAuthorDashboard);
 }
 
+function dialogueInit(){
+   
+}
+
 function initClickEvents(authors){
+   
+    
     //Load the comments on click of the comments button
     $( "button.load-comments" ).click(function() {
         var authorID = $(this).attr('author-id');
         var bookName = $(this).attr('book-name');
 
+        console.log(bookName);
+        console.log(authorID);
 
+        noty({
+            layout: "topCenter",
+            text: 'Comments for '+bookName+'',
+            buttons: [
+            {
+                addClass: 'btn btn-primary', text: 'Close', onClick: function($noty) {
+
+                    $noty.close();
+                }
+            }]
+        });
 
     });    
 }
@@ -65,6 +84,7 @@ function printAuthorDashboard(authors) {
                 $( '#book-'+count+'-'+author.id ).append( $( 
                     '<button class="btn btn-success load-comments" author-id="'+author.id+'"" book-name="'+ book.bookName +'">Comments</button>'
                 ));
+
                 count++;
             });
 

@@ -40,6 +40,16 @@
 .load-comments{
 	margin-top:10px;
 }
+
+.custom-container{
+    border: 1px solid #fff;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 10px;
+    min-height: 20px;
+    max-width: 300px;
+}
+
 /* Overrides */
 .navbar-custom{
 	padding: 10px 0;
