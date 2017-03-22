@@ -16,7 +16,6 @@ var db = mongoose.connection;
 
 var routes  = require("./routes/index");
 var users   = require("./routes/users");
-var books   = require("./routes/books");
 var authors = require("./routes/authors");
 
 
@@ -82,17 +81,20 @@ app.use(function(req, res, next){
 });
 
 
-
-
 // next up add the middleware for the route files
 app.use('/', routes);
 app.use('/users', users);
-app.use('/books', books);
 app.use('/authors', authors);
 
 
 var port = 3000;
+
 //server logging
+app.use(function(req, res, next) {
+  console.log(`App - '${port}': ${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+  next();
+});
+
 app.set('port', (process.env.PORT || port));
 
 app.listen(app.get('port'), function(){
