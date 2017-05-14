@@ -32,7 +32,11 @@
     background: rgba(36, 202, 169, 0.25)
 }
 
+.comment-panel{
+	max-height: 500px;
+	overflow:auto;
 
+}
 
 .nav-text{
 	font-size:10px;

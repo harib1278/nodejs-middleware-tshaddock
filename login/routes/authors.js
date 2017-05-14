@@ -143,8 +143,9 @@ router.put("/author/book/addcomment" ,function(req,res){
 	});
 
 	//set a success message
-	res.render('index',{
-		success_msg:'Book comment saved'
+	res.send({
+		success_msg:'Book comment saved',
+		comment: bookcomment
 	});	
 
 });

@@ -26,9 +26,8 @@ function loadCommentsDialogue(authors){
         var authorID   = $(this).attr('author-id');
         var authorName = $(this).attr('author-name');
         var bookName   = $(this).attr('book-name');
-
-        //console.log(bookName);
-        //console.log(authorID);
+        
+        var user       = $('.head-username').text();
 
         noty({
 
@@ -40,21 +39,56 @@ function loadCommentsDialogue(authors){
                     '<div class="comment-panel panel-body">'+
                         '<div class="text-center"><h5><b>Comments for '+bookName+'</b></h5></div>'+
                         '<div class="new-dialogue">'+
-                            '<div class="comment-list"></div>' +                            
+                            '<div class="comment-list"><div class="top-inner"></div></div>' +                            
                         '</div>'+   
                     '</div>',
             buttons: [
                 
                 {
                     addClass: 'btn btn-success', text: 'Add Comment', onClick: function($noty) {
-                        //close without saving
-                        $noty.close();
+
+                        var comment = $('.comment-input').val();
+
+
+                        if(comment.length < 1){
+                            noty({text: 'Error: Comment cannot be blank!', type: 'error'});
+                        } else {
+                            $.ajax({
+                                method: "PUT",
+                                url: "http://localhost:3001/author/book/addcomment",
+                                data: { 
+                                    bookName: bookName, 
+                                    bookcomment: comment,
+                                    user: user
+                            }
+                            })
+                            .done(function( e, msg ) {
+                               noty({
+                                    text: 'Success: Comment saved!', 
+                                    type: 'success'
+
+                                });
+                                var time = new Date(Date.now() * 1000);
+
+                                $( '.top-inner' ).append( $( 
+                                    '<div class="comment">' +
+                                        '<p><i>'+user+'</i>:<br> '+comment+'<br><span class="comment-time">@ '+time+'</span></p><hr>' +
+                                    '</div>'
+                                ));
+
+                            })
+                            .fail(function( msg ) {
+                                 noty({text: 'Error: Something went wrong with your request, please try again.', type: 'error'});
+                            });
+                        }
                     }
                 },
                 {
                     addClass: 'btn btn-primary', text: 'Close', onClick: function($noty) {                            
                         
                         $noty.close();
+
+                        location.reload();
                     }
                 }
             ]
@@ -70,13 +104,13 @@ function loadCommentsDialogue(authors){
                         $.each(books.bookComments, function(index, comments) {
                             //var time = new Date(comments.time * 1000);
                             var time = comments.time;
-                                                        
+
                             $( '.comment-list' ).append( $( 
-                                '<p>'+
+                                '<div class="comment"><p>'+
                                     '<i>'+comments.user+'</i>:<br> '+comments.comment + '<br>' +
                                     '<span class="comment-time">@ '+time+'</span>' +
                                 '</p>'+
-                                '<hr>'
+                                '<hr></div>'
                             ));
                             
                         });
@@ -87,7 +121,7 @@ function loadCommentsDialogue(authors){
 
         $( '.comment-list' ).append( $( 
             '<form id="usr-comment">' +
-                '<input type="text" name="comment" class="comment-input">' +                                                    
+                '<input type="text" name="comment" class="comment-input">' +                                                   
             '</form>'
         ));
         
@@ -130,9 +164,9 @@ function loadNewBookDialogue(authors){
                         var bookName        = $('.title-input').val();
                         var bookDescription = $('.book-description-input').val();
 
-                        if(name.length< 1){
-                            noty({text: 'Error: Author name cannot be blank!', type: 'error'});
-                        } else if(description.length < 1){
+                        if(bookName.length< 1){
+                            noty({text: 'Error: Book name cannot be blank!', type: 'error'});
+                        } else if(bookDescription.length < 1){
                             noty({text: 'Error: Description cannot be blank!', type: 'error'});
                         } else {
                             $.ajax({
@@ -146,6 +180,7 @@ function loadNewBookDialogue(authors){
                             })
                             .done(function( e, msg ) {
                                noty({
+                                    layout: "topCenter",
                                     text: 'Success: book saved!', 
                                     type: 'success', 
                                     buttons: [{
@@ -162,7 +197,7 @@ function loadNewBookDialogue(authors){
                             $noty.close();
                         }
 
-                        $noty.close();
+                        
                     }
                 },
                 {
@@ -234,6 +269,7 @@ function loadNewAuthorDialogue(){
                             })
                             .done(function( e, msg ) {
                                noty({
+                                    layout: "topCenter",
                                     text: 'Success: Author saved!', 
                                     type: 'success', 
                                     buttons: [{
