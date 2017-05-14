@@ -13,8 +13,7 @@ var Author = mongoose.Schema({
     authDescription: String,
     authBooks: [{
         bookName: {
-            type: String,
-            unique: true
+            type: String
         },
         bookDescription: String,
         bookComments: [{

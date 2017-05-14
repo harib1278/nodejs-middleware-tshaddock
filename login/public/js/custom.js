@@ -62,7 +62,7 @@ function loadCommentsDialogue(authors){
         });
 
         $.each(authors, function(index, author) {
-            if(author.id == authorID){                
+            if(author._id == authorID){                
                 $.each(author.authBooks, function(index, books) {
                     
                     if(books.bookName == bookName){

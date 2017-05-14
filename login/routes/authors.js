@@ -67,8 +67,7 @@ router.post("/authors" , function(req, res){
 	} else {
 		var newAuthor = new Author({
 			authName: authName,
-			authDescription: authDescription,
-			authBooks: []
+			authDescription: authDescription
 		});
 
 		Author.createAuthor(newAuthor, function(err, user){
@@ -79,11 +78,13 @@ router.post("/authors" , function(req, res){
 		//set a success message
 		res.render('register',{
 			success_msg:'Author saved'
-		});
-		
-	}
+		});	
+	}	
+});
 
-	
+app.post("/dictionary-api" , function(req, res){
+    skierTerms.push(req.body);
+    res.json(skierTerms);
 });
 
 
