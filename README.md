@@ -97,6 +97,13 @@ Overall it was a good learning project and I now feel I have a solid grip of wha
 "passport-local": "*",  
 "path-to-regexp": "^1.7.0"  
   
+## Other Libraries:
+- Noty notification library: http://ned.im/noty/  
+- Font awesome: http://fontawesome.io/  
+- Jquery: https://api.jquery.com/  
+- Jquery easing: http://gsgd.co.uk/sandbox/jquery/easing/  
+- Bootstrap: https://getbootstrap.com/  
+  
 ## Data example:  
 Author and Book:  
 ```json
