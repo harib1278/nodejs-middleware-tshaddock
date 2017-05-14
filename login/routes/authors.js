@@ -61,7 +61,7 @@ router.post("/authors" , function(req, res){
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.render('register',{
+		res.render('index',{
 			errors:errors
 		});
 	} else {
@@ -76,16 +76,54 @@ router.post("/authors" , function(req, res){
 		});
 
 		//set a success message
-		res.render('register',{
+		res.render('index',{
 			success_msg:'Author saved'
 		});	
 	}	
 });
 
-app.post("/dictionary-api" , function(req, res){
-    skierTerms.push(req.body);
-    res.json(skierTerms);
+router.put("/author/addbook" ,function(req,res){
+
+	var errors = [];
+
+	var authName 		= req.body.authName;
+	var bookName 		= req.body.bookName;
+	var bookDescription = req.body.bookDescription;
+
+	req.checkBody('authName','authName is required').notEmpty();
+	req.checkBody('bookName','bookName is required').notEmpty();
+	req.checkBody('bookDescription','bookDescription is required').notEmpty();
+
+
+	//console.log(authName);
+	//console.log(bookName);
+	console.log(bookDescription);
+
+	var authBooks =
+		{
+			bookName : bookName,
+			bookDescription : bookDescription,
+			bookComments: [],
+			bookRating: {
+	            ratingScore: 0,
+	            numberOfRatings: 0
+	        }
+		};
+
+	Author.addAuthorBook(authName, authBooks, function(err, author){
+		if(err) throw err;
+		console.log(author);
+	});
+
+	//set a success message
+	res.render('index',{
+		success_msg:'Book comment saved'
+	});	
+
 });
+
+
+
 
 
 //set the port and start the server!
