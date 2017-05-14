@@ -26,12 +26,7 @@ var Author = mongoose.Schema({
             }
         }],
         bookRating: {
-            ratingScore: {
-                type: Number
-            },
-            numberOfRatings: {
-                type: Number
-            }
+            user: String
         }
     }]
 });
@@ -84,6 +79,8 @@ module.exports.addAuthorBook = function(authName, authBooks, callback){
 }
 
 
+
+
 module.exports.addBookComment = function(bookName, user, authComment, callback){
 
     Author.findOneAndUpdate({ 
@@ -101,6 +98,45 @@ module.exports.addBookComment = function(bookName, user, authComment, callback){
                     var msg = {
                         code: 400,
                         error_msg:'Error: Problem when saving new comment.'
+                    };
+                    callback(err, msg);
+                    
+                    console.log(err);
+                } else {
+
+                    var msg = {
+                        code: 200,
+                        success_msg:'Success: New comment has been added succesfully.',
+                        user: user
+                    };
+                    callback(null, msg);
+                }
+            } else {
+                res.render('error');
+                console.log(err);
+            }
+        });
+}
+
+module.exports.addBookFavorite = function(bookName, user, authFavorite, callback){
+    console.log(authFavorite);
+
+
+    Author.findOneAndUpdate({ 
+                'authBooks.bookName': bookName
+            },{
+                $push: { 
+                    'authBooks.$.bookRating' : authFavorite 
+                }
+            },{ 
+                new: true
+            }, function (err, author) {
+            console.log(author);
+            if (author !== null) {
+                if(err){
+                    var msg = {
+                        code: 400,
+                        error_msg:'Error: Problem when saving new rating.'
                     };
                     callback(err, msg);
                     

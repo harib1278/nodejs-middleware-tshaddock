@@ -49,7 +49,7 @@ router.get("/authors", function(req, res) {
 });
 
 
-router.post("/authors" , function(req, res){
+router.post("/authors/add" , function(req, res){
     var errors = [];
 
 	var authName  	    = req.body.authName;
@@ -100,8 +100,7 @@ router.put("/author/addbook" ,function(req,res){
 			bookDescription : bookDescription,
 			bookComments: [],
 			bookRating: {
-	            ratingScore: 0,
-	            numberOfRatings: 0
+	            user: ''
 	        }
 		};
 
@@ -150,7 +149,37 @@ router.put("/author/book/addcomment" ,function(req,res){
 
 });
 
+router.put("/author/book/addfavorite" ,function(req,res){
 
+	var errors = [];
+
+	var bookName 	 = req.body.bookName;;
+	var user 		 = req.body.user;
+
+	console.log(bookName);
+	console.log(user);
+
+	req.checkBody('bookName','bookName is required').notEmpty();
+	req.checkBody('user','username is required').notEmpty();
+
+	var authFavorite = [
+		{
+            user: user
+        }
+	];
+
+	Author.addBookFavorite(bookName, user, authFavorite, function(err, author){
+		if(err) throw err;
+		console.log(author);
+	});
+
+	//set a success message
+	res.send({
+		success_msg:'Book favorite saved',
+		user: user
+	});	
+
+});
 
 
 //set the port and start the server!

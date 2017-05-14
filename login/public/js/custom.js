@@ -17,7 +17,17 @@ function initClickEvents(authors){
     loadNewAuthorDialogue();
     loadCommentsDialogue(authors);
     loadNewBookDialogue(authors);
+    loadFavoriteClickEvent();
+}
+
+function loadFavoriteClickEvent(){
     
+    $( ".favourite-click" ).click(function() {
+        var bookName   = $(this).attr('book-name');
+
+        noty({layout: "topCenter",timeout: 1000, text: bookName+' has been favourited!', type: 'success'});
+
+    });
 }
 
 function loadCommentsDialogue(authors){
@@ -76,6 +86,8 @@ function loadCommentsDialogue(authors){
                                     '</div>'
                                 ));
 
+                                //set comment box back to blank
+                                $('.comment-input').val('');
                             })
                             .fail(function( msg ) {
                                  noty({text: 'Error: Something went wrong with your request, please try again.', type: 'error'});
@@ -261,7 +273,7 @@ function loadNewAuthorDialogue(){
                         } else {
                             $.ajax({
                                 method: "POST",
-                                url: "http://localhost:3001/authors",
+                                url: "http://localhost:3001/authors/add",
                                 data: { 
                                     authName: name, 
                                     authDescription: description
@@ -365,7 +377,7 @@ function printAuthorDashboard(authors) {
                     ));
 
                     $( '#book-'+count+'-'+author._id ).append( $( 
-                        '<button class="btn btn-favourite"  author-name="'+author.authName+'" author-id="'+author._id+'"" book-name="'+ book.bookName +'"><i class="fa fa-star" aria-hidden="true"></i></button>'
+                        '<button class="btn btn-favourite favourite-click"  author-name="'+author.authName+'" author-id="'+author._id+'"" book-name="'+ book.bookName +'"><i class="fa fa-star" aria-hidden="true"></i></button>'
                     ));
 
                     count++;
