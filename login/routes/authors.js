@@ -1,4 +1,5 @@
 var express 	= require('express');
+var expressValidator = require('express-validator');
 var bodyParser  = require('body-parser');
 var router		= express();
 var mongoose	= require('mongoose');
@@ -12,6 +13,8 @@ var cors 		= require('cors');
 var Author		= require('../models/author');
 
 router.use(cors());
+router.use(expressValidator())
+
 
 router.use(bodyParser.urlencoded({
     extended: false
@@ -63,7 +66,7 @@ router.post("/authors" , function(req, res){
 		});
 	} else {
 		var newAuthor = new Author({
-			authName: name,
+			authName: authName,
 			authDescription: authDescription,
 			authBooks: []
 		});
@@ -74,9 +77,10 @@ router.post("/authors" , function(req, res){
 		});
 
 		//set a success message
-		req.flash('success_msg','Author saved');
-		//redirect
-		res.redirect('/');
+		res.render('register',{
+			success_msg:'Author saved'
+		});
+		
 	}
 
 	
