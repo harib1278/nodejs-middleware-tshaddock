@@ -21,7 +21,7 @@ users
 authors  
   
 ## Install dependencies
-composer install
+composer install  
 -- To get and install composer go to: https://getcomposer.org/  
    
 ## Start the application servers  
