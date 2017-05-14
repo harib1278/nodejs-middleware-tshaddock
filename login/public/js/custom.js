@@ -68,9 +68,9 @@ function loadCommentsDialogue(authors){
                     if(books.bookName == bookName){
                         
                         $.each(books.bookComments, function(index, comments) {
-                            var time = new Date(comments.time * 1000);
-
-                            
+                            //var time = new Date(comments.time * 1000);
+                            var time = comments.time;
+                                                        
                             $( '.comment-list' ).append( $( 
                                 '<p>'+
                                     '<i>'+comments.user+'</i>:<br> '+comments.comment + '<br>' +

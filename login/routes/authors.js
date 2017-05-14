@@ -122,23 +122,22 @@ router.put("/author/book/addcomment" ,function(req,res){
 
 	var errors = [];
 
-	var authName	 = req.body.authName;
 	var bookName 	 = req.body.bookName;
 	var bookcomment  = req.body.bookcomment;
 	var user 		 = req.body.user;
 
-	req.checkBody('authName','authName is required').notEmpty();
 	req.checkBody('bookName','bookName is required').notEmpty();
 	req.checkBody('bookcomment','bookcomment is required').notEmpty();
+	req.checkBody('user','username is required').notEmpty();
 
 	var authComment =
 		{
 			comment : bookcomment,
 			user 	: user,
-			time	: []			
+			time	: Date.now()			
 		};
 
-	Author.addBookComment(authName, user, authComment, function(err, author){
+	Author.addBookComment(bookName, user, authComment, function(err, author){
 		if(err) throw err;
 		console.log(author);
 	});

@@ -13,7 +13,8 @@ var Author = mongoose.Schema({
     authDescription: String,
     authBooks: [{
         bookName: {
-            type: String
+            type: String,
+            unique: true
         },
         bookDescription: String,
         bookComments: [{
@@ -83,23 +84,23 @@ module.exports.addAuthorBook = function(authName, authBooks, callback){
 }
 
 
-module.exports.addBookComment = function(authName, user, authComment, callback){
+module.exports.addBookComment = function(bookName, user, authComment, callback){
 
-    Author.findOneAndUpdate({
-            'authName': authName
-        },{ 
-            $push: {
-                authBooks : authBooks
-            }
-        },{
-            new: true 
-        }, function (err, author) {
+    Author.findOneAndUpdate({ 
+                'authBooks.bookName': bookName
+            },{
+                $push: { 
+                    'authBooks.$.bookComments' : authComment 
+                }
+            },{ 
+                new: true
+            }, function (err, author) {
             console.log(author);
             if (author !== null) {
                 if(err){
                     var msg = {
                         code: 400,
-                        error_msg:'Error: Problem when saving new book.'
+                        error_msg:'Error: Problem when saving new comment.'
                     };
                     callback(err, msg);
                     
@@ -108,8 +109,8 @@ module.exports.addBookComment = function(authName, user, authComment, callback){
 
                     var msg = {
                         code: 200,
-                        success_msg:'Success: New book has been added succesfully.',
-                        authName: authName
+                        success_msg:'Success: New comment has been added succesfully.',
+                        user: user
                     };
                     callback(null, msg);
                 }
