@@ -101,7 +101,7 @@ Overall it was a good learning project and I now feel I have a solid grip of wha
 Author and Book:  
 ```json
 {  
-	"_id" : ObjectId("5918838a0466c929ece3e39d"),  
+	"_id" : "5918838a0466c929ece3e39d",  
 	"authName" : "Book",   
 	"authDescription" : "This is a book",  
 	"authBooks" : [   
@@ -116,8 +116,8 @@ Author and Book:
 				{  
 					"user" : "Jimbo Jones",  
 					"comment" : "Great book - favoriting this!",  
-					"_id" : ObjectId("591886c1a46ae3344cb04854"),  
-					"time" : ISODate("2017-05-14T16:33:05.733Z")  
+					"_id" : "591886c1a46ae3344cb04854",  
+					"time" : "2017-05-14T16:33:05.733Z"  
 				}  
 			]  
 		}  
@@ -131,7 +131,7 @@ User:
 ```json
 
 {  
-	"_id" : ObjectId("58835cc2360fa82a6c5bdede"),  
+	"_id" : "58835cc2360fa82a6c5bdede",  
 	"name" : "Jimbo Jones",  
 	"email" : "jimjones@email.com",  
 	"username" : "jimbob",  
