@@ -1,5 +1,4 @@
 var express 	= require('express');
-var expressValidator = require("express-validator");
 var bodyParser  = require('body-parser');
 var router		= express();
 var mongoose	= require('mongoose');
@@ -12,17 +11,16 @@ var cors 		= require('cors');
 //system specific declarations
 var Author		= require('../models/author');
 
-router.use(expressValidator())
+router.use(cors());
 
 router.use(bodyParser.urlencoded({
     extended: false
 }));
-router.use(bodyParser.json());
 
 var port = 3001;
 //server logging
 router.use(function(req, res, next) {
-	console.log(`App - '${port}': ${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+	//console.log(`App - '${port}': ${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
 	next();
 });
 
@@ -50,39 +48,64 @@ router.get("/authors", function(req, res) {
 
 router.post("/authors" , function(req, res){
     var errors = [];
+    console.log(req.body);
 
 	var authName  	    = req.body.authName;
 	var authDescription = req.body.authDescription;
 
-	req.checkBody('authName','authName is required').notEmpty();
-	req.checkBody('authDescription','authDescription is required').notEmpty();
+	console.log(req.body.authName);
+	console.log(req.body.authDescription);
 
-	var errors = req.validationErrors();
-
+	//console.log(`App - '${port}': ${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+	
+	/*
 	if(errors){
 		res.render('register',{
 			errors:errors
 		});
+	}
+
+	if (validate.isEmpty(req.body.authName)) {
+		errors.push('Error: Author Name can not be left blank');
 	} else {
-		var newAuthor = new Author({
-			authName: name,
-			authDescription: authDescription,
-			authBooks: []
-		});
+		authName = req.body.authName;
+	}
 
-		Author.createAuthor(newAuthor, function(err, user){
-			if(err) throw err;
-			console.log(user);
-		});
-
-		//set a success message
-		req.flash('success_msg','Author saved');
-		//redirect
-		res.redirect('/');
+	if (validate.isEmpty(req.body.authDescription)) {
+		errors.push('Error: Author Description cannot be left blank.');
+	} else {
+		authDescription = req.body.authDescription;
 	}
 
 	
+
+
+	if (validate.isEmpty(errors)) {
+		var author = new Author ({
+			authName : authName,
+			authDescription : authDescription,
+			authBooks: []
+		});
+		
+		author.save(function(err) {
+			if (err) {
+				console.log('Error: Failure when saving user');
+				console.log(err);
+			} else {
+				res.send('Success: Author added succesfully');
+			}
+		});
+
+	} else {
+		res.send(errors);
+	} 
+	*/
 });
+
+
+
+
+
 
 
 //set the port and start the server!
