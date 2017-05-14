@@ -99,37 +99,43 @@ Overall it was a good learning project and I now feel I have a solid grip of wha
   
 ## Data example:  
 Author and Book:  
+```json
 {  
-    "_id" : ObjectId("5918838a0466c929ece3e39d"),  
-    "authName" : "Book",   
-    "authDescription" : "This is a book",  
-    "authBooks" : [   
-        {  
+	"_id" : ObjectId("5918838a0466c929ece3e39d"),  
+	"authName" : "Book",   
+	"authDescription" : "This is a book",  
+	"authBooks" : [   
+		{  
 			"bookDescription" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porta ligula vel sodales porta. Etiam tempor leo ipsum.",  
 			"bookName" : "Book title",  
 			"_id" : ObjectId("591883960466c929ece3e39e"),  
 			"bookRating" : {  
 				"user" : "Jimbo Jones"  
 			},  
-            "bookComments" : [  
-                {  
-                    "user" : "Jimbo Jones",  
-                    "comment" : "Great book - favoriting this!",  
-                    "_id" : ObjectId("591886c1a46ae3344cb04854"),  
-                    "time" : ISODate("2017-05-14T16:33:05.733Z")  
-                }  
-            ]  
-        }  
-    ],  
-    "__v" : 0  
+			"bookComments" : [  
+				{  
+					"user" : "Jimbo Jones",  
+					"comment" : "Great book - favoriting this!",  
+					"_id" : ObjectId("591886c1a46ae3344cb04854"),  
+					"time" : ISODate("2017-05-14T16:33:05.733Z")  
+				}  
+			]  
+		}  
+	],  
+	"__v" : 0  
 }  
+```
+
   
 User:  
+```json
+
 {  
-    "_id" : ObjectId("58835cc2360fa82a6c5bdede"),  
-    "name" : "Jimbo Jones",  
-    "email" : "jimjones@email.com",  
-    "username" : "jimbob",  
-    "password" : "$2a$10$4iA7tkJnxbMNtcnZvtTiL.8MhAW0vdLZ4HCMqbfyUcITPjxboGOiS",  
-    "__v" : 0  
+	"_id" : ObjectId("58835cc2360fa82a6c5bdede"),  
+	"name" : "Jimbo Jones",  
+	"email" : "jimjones@email.com",  
+	"username" : "jimbob",  
+	"password" : "$2a$10$4iA7tkJnxbMNtcnZvtTiL.8MhAW0vdLZ4HCMqbfyUcITPjxboGOiS",  
+	"__v" : 0  
 }  
+```
