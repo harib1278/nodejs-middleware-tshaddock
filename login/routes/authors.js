@@ -94,11 +94,6 @@ router.put("/author/addbook" ,function(req,res){
 	req.checkBody('bookName','bookName is required').notEmpty();
 	req.checkBody('bookDescription','bookDescription is required').notEmpty();
 
-
-	//console.log(authName);
-	//console.log(bookName);
-	console.log(bookDescription);
-
 	var authBooks =
 		{
 			bookName : bookName,
@@ -117,11 +112,43 @@ router.put("/author/addbook" ,function(req,res){
 
 	//set a success message
 	res.render('index',{
-		success_msg:'Book comment saved'
+		success_msg:'Book saved'
 	});	
 
 });
 
+
+router.put("/author/book/addcomment" ,function(req,res){
+
+	var errors = [];
+
+	var authName	 = req.body.authName;
+	var bookName 	 = req.body.bookName;
+	var bookcomment  = req.body.bookcomment;
+	var user 		 = req.body.user;
+
+	req.checkBody('authName','authName is required').notEmpty();
+	req.checkBody('bookName','bookName is required').notEmpty();
+	req.checkBody('bookcomment','bookcomment is required').notEmpty();
+
+	var authComment =
+		{
+			comment : bookcomment,
+			user 	: user,
+			time	: []			
+		};
+
+	Author.addBookComment(authName, user, authComment, function(err, author){
+		if(err) throw err;
+		console.log(author);
+	});
+
+	//set a success message
+	res.render('index',{
+		success_msg:'Book comment saved'
+	});	
+
+});
 
 
 

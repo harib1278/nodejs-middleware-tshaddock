@@ -96,14 +96,16 @@ function loadCommentsDialogue(authors){
     });
 }
 
+function refreshPage(){
+    top.location.href = top.location.href;
+}
+
+
 function loadNewBookDialogue(authors){
     $( "button.add-book" ).click(function() {
         var authorID   = $(this).attr('author-id');
         var authorName = $(this).attr('author-name');
         var bookName   = $(this).attr('book-name');
-
-        //console.log(bookName);
-        //console.log(authorID);
 
         noty({
 
@@ -116,13 +118,50 @@ function loadNewBookDialogue(authors){
                         '<div class="text-center"><h5><b>Add new book for '+authorName+'</b></h5></div>'+
                         '<div class="new-dialogue">'+
                             '<div class="book-controls"></div>' +                            
+                            '<input type="hidden" name="auth-name" class="auth-hidden" author-name="'+authorName+'">' +                            
                         '</div>'+   
                     '</div>',
             buttons: [
                 
                 {
-                    addClass: 'btn btn-success', text: 'Add Comment', onClick: function($noty) {
-                        //close without saving
+                    addClass: 'btn btn-success', text: 'Add Book', onClick: function($noty) {
+                        
+                        var name            = $('.auth-hidden').attr('author-name');
+                        var bookName        = $('.title-input').val();
+                        var bookDescription = $('.book-description-input').val();
+
+                        if(name.length< 1){
+                            noty({text: 'Error: Author name cannot be blank!', type: 'error'});
+                        } else if(description.length < 1){
+                            noty({text: 'Error: Description cannot be blank!', type: 'error'});
+                        } else {
+                            $.ajax({
+                                method: "PUT",
+                                url: "http://localhost:3001/author/addbook",
+                                data: { 
+                                    authName: name, 
+                                    bookName: bookName,
+                                    bookDescription: bookDescription
+                            }
+                            })
+                            .done(function( e, msg ) {
+                               noty({
+                                    text: 'Success: book saved!', 
+                                    type: 'success', 
+                                    buttons: [{
+                                        addClass: 'btn btn-success', text: 'Ok', onClick: function($noty) {
+                                            location.reload();
+                                        }
+                                    }]
+                                });
+                                
+                            })
+                            .fail(function( msg ) {
+                                 noty({text: 'Error: Something went wrong with your request, please try again.', type: 'error'});
+                            });
+                            $noty.close();
+                        }
+
                         $noty.close();
                     }
                 },
@@ -146,7 +185,7 @@ function loadNewBookDialogue(authors){
         $( '.book-controls' ).append( $( 
             '<label for="description">Description:</label><br>'+
             '<form id="usr-comment" name="description">' +
-                '<textarea type="text" name="comment" class="description-input comment-input"></textarea>' +                                                    
+                '<textarea type="text" name="comment" class="book-description-input comment-input"></textarea>' +                                                    
             '</form>'
         ));
 
@@ -193,20 +232,23 @@ function loadNewAuthorDialogue(){
                                     authDescription: description
                             }
                             })
-                            .done(function( msg ) {
-                                noty({text: 'Author saved!', type: 'success'});
-                                location.reload();
+                            .done(function( e, msg ) {
+                               noty({
+                                    text: 'Success: Author saved!', 
+                                    type: 'success', 
+                                    buttons: [{
+                                        addClass: 'btn btn-success', text: 'Ok', onClick: function($noty) {
+                                            location.reload();
+                                        }
+                                    }]
+                                });
+                                
                             })
                             .fail(function( msg ) {
                                  noty({text: 'Error: Something went wrong with your request, please try again.', type: 'error'});
                             });
                             $noty.close();
                         }
-                        /*
-
-                         
-
-                        */
                         
                     }
                 },
@@ -271,7 +313,7 @@ function printAuthorDashboard(authors) {
                 $.each(author.authBooks, function(index, book) {
 
                     $( '#book-'+author._id ).append( $( 
-                        '<div id="book-'+count+'-'+author._id+'" class="col-md-4"></div>'
+                        '<div id="book-'+count+'-'+author._id+'" class="col-md-4 book"></div>'
                     ));
 
                     $( '#book-'+count+'-'+author._id ).append( $( 

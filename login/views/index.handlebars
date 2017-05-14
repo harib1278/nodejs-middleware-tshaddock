@@ -1,3 +1,12 @@
+{{#if errors}}
+	{{#each errors}}
+		<div class="alert alert-danger">{{msg}}</div>
+	{{/each}}
+{{/if}}
+{{#if success_msg}}
+	<div class="alert alert-success"></div>
+{{/if}}
+
 <h2>Welcome to your dashboard {{user.name}}</h2>
 <p>Here are all the authors with their books that we currently have stored:</p>
 <br>
