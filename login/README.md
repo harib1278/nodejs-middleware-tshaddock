@@ -32,7 +32,7 @@ node app
 Middleware server running on port 3001  
 App server running on port 3000  
   
-## Project Log ##  
+# Project Log  
   
 This application follows a simple architecture and is made up of two componenent servers, one a webserving application server operating on port 3000 and the other an API middleware layer server operating on port 3001. This decision was undertaken in order to mimic a middleware architecture that one may see in a larger scale organisation (in this case it is only a small example of a much large concept).
   
@@ -45,14 +45,14 @@ The user is expected to create an account using an email address and username/pa
 - Comments are viewed by clicking the 'comments' button that comes up on the indvidual books. You can add a new comment by filling in the comment box on the dialogue box that is displayed.  
 - Books are favorited simply by clicking the star icon that is displayed on each book, when the book is favorited the star will turn black.  
   
-# Security    
+## Security    
 A number of security measures have been taken when coding this project, firstly the use of complex 1 way hashing and salting on the user passwords using the passport module. This makes the storage of user passwords much safer - if say the database is hacked the passwords will still be encrypted.  
   
 As the API server was on a different port, the use of the CORS (Cross-origin resource sharing) module was needed to allow the main application to call the API and then consume the data and allow for submissions to the API.
   
 It is assumed that the middleware API if ran on a different server will be whitelisted when the main application server is accessing it. It is for this reason that authorisation was not required for the api access.
   
-# Design  
+## Design  
 The overall project utilises a simple but very intuitive UI design, this has been designed this was very carefully to give the best possible user experience when using the project. A number of important design ideas have been followed:  
  - The small number of pages makes for simple navigation of the application.  
  - The index page has been reused for the dashboard  
@@ -60,19 +60,19 @@ The overall project utilises a simple but very intuitive UI design, this has bee
   
 The UI design comes from a Bootstrap template called 'FreeLancer', it can be downloaded for free here: https://blackrockdigital.github.io/startbootstrap-freelancer/  
   
-# Routing  
+## Routing  
 - GET /authors - responsible for loading the author and book information into the dashboard  
 - POST /authors/add - responsible for adding new authors to the database  
 - PUT /author/adbook - responsible for adding a book to an author object  
 - PUT /author/book/addcomment - responsible for adding a comment to a book object  
 - PUT /author/book/addfavorite - responsible for adding a user favorite option to a book object (not working correctly)  
   
-# Problems  
+## Problems  
 - Initially until discovering the CORS module I had lots of problems with accessing API data from the main application server.  
 - The user login and register functionality was by far the hardest part of this entire project and thus consumed the overwhelming amount of time spent. I didn't really feel the course prepared me for the complexity of doing this in nodejs - I had to teach myself the entire thing instead.  
 - I ran out of time when debugging the last route (the favoriting mechanism), I left the mostly complete code in anyway for the marker to reference, I was trying to save the unique username to the BookRating attribute of the Book object. The page then on load would have cross referenced this with username of the logged in user, if they matched then the start of the favoited book would be coloured black to indicate the book was a favorite and had been loaded from a saved choice.  
   
-# Conclusions  
+## Conclusion 
 This project took an overwhelming amount of time to complete, I had lots of issues with the amount of time commited to this project and it was a struggle to juggle around my other Uni and Work commitments. It was mostly the sheer amount that I had to teach myself to complete it to a semi satisfactory standard - had I not had quite a bit of javascript experience outside of Birkbeck I do not think this project could have been completed.  
   
 Overall it was a good learning project and I now feel I have a solid grip of what coding middleware applications on nodeJs encompasses.  
@@ -96,6 +96,13 @@ Overall it was a good learning project and I now feel I have a solid grip of wha
 "passport-http": "*",  
 "passport-local": "*",  
 "path-to-regexp": "^1.7.0"  
+  
+## Other Libraries:
+- Noty notification library: http://ned.im/noty/  
+- Font awesome: http://fontawesome.io/  
+- Jquery: https://api.jquery.com/  
+- Jquery easing: http://gsgd.co.uk/sandbox/jquery/easing/  
+- Bootstrap: https://getbootstrap.com/  
   
 ## Data example:  
 Author and Book:  
