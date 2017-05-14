@@ -69,7 +69,7 @@ The UI design comes from a Bootstrap template called 'FreeLancer', it can be dow
   
 ## Problems  
 - Initially until discovering the CORS module I had lots of problems with accessing API data from the main application server.  
-- The user login and register functionality was by far the hardest part of this entire project and thus consumed the overwhelming amount of time spent. I didn't really feel the course prepared me for the complexity of doing this in nodejs - I had to teach myself the entire thing instead.  
+- The user login and register functionality was by far the hardest part of this entire project and thus consumed the overwhelming amount of time spent. I didn't really feel the course prepared me for the complexity of doing this in nodejs having had to learn it by myself instead.  
 - I ran out of time when debugging the last route (the favoriting mechanism), I left the mostly complete code in anyway for the marker to reference, I was trying to save the unique username to the BookRating attribute of the Book object. The page then on load would have cross referenced this with username of the logged in user, if they matched then the start of the favoited book would be coloured black to indicate the book was a favorite and had been loaded from a saved choice.  
   
 ## Conclusion 
