@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function init(){
-    //pull data from api into page
+    //pull data from api into page and initalise click events
     $.getJSON('http://localhost:3001/authors', printAuthorDashboard);
 }
 
@@ -115,7 +115,7 @@ function loadNewBookDialogue(authors){
                     '<div class="comment-panel panel-body">'+
                         '<div class="text-center"><h5><b>Add new book for '+authorName+'</b></h5></div>'+
                         '<div class="new-dialogue">'+
-                            '<div class="comment-list"></div>' +                            
+                            '<div class="book-controls"></div>' +                            
                         '</div>'+   
                     '</div>',
             buttons: [
@@ -136,14 +136,14 @@ function loadNewBookDialogue(authors){
             
         });
 
-        $( '.comment-list' ).append( $( 
+        $( '.book-controls' ).append( $( 
             '<label for="title">Title:</label><br>'+
             '<form id="usr-comment" name="title">' +
                 '<input type="text" name="comment" class="title-input">' +                                                    
             '</form>'
         ));
 
-        $( '.comment-list' ).append( $( 
+        $( '.book-controls' ).append( $( 
             '<label for="description">Description:</label><br>'+
             '<form id="usr-comment" name="description">' +
                 '<textarea type="text" name="comment" class="description-input comment-input"></textarea>' +                                                    
@@ -167,20 +167,20 @@ function loadNewAuthorDialogue(){
                     '<div class="comment-panel panel-body">'+
                         '<div class="text-center"><h5><b>Add new author</b></h5></div>'+
                         '<div class="new-dialogue">'+
-                            '<div class="comment-list"></div>' +                            
+                            '<div class="add-controls"></div>' +                            
                         '</div>'+   
                     '</div>',
             buttons: [
                 
                 {
                     addClass: 'btn btn-success', text: 'Add Comment', onClick: function($noty) {
-                        //close without saving
+                        
                         $noty.close();
                     }
                 },
                 {
                     addClass: 'btn btn-primary', text: 'Close', onClick: function($noty) {                            
-                        
+                        //close without saving
                         $noty.close();
                     }
                 }
@@ -188,19 +188,19 @@ function loadNewAuthorDialogue(){
             
         });
 
-        $( '.comment-list' ).append( $( 
+        $( '.add-controls' ).append( $( 
             '<label for="title">Name:</label><br>'+
             '<form id="usr-comment" name="title">' +
                 '<input type="text" name="comment" class="title-input">' +                                                    
             '</form>'
         ));
 
-        $( '.comment-list' ).append( $( 
+        $( '.add-controls' ).append( $( 
             '<label for="description">Description &amp; Biography:</label><br>'+
             '<form id="usr-comment" name="description">' +
                 '<textarea type="text" name="comment" class="description-input comment-input"></textarea>' +                                                    
             '</form>'
-        ));
+        ));   
 
 
     });
@@ -251,7 +251,11 @@ function printAuthorDashboard(authors) {
                     ));
 
                     $( '#book-'+count+'-'+author.id ).append( $( 
-                        '<button class="btn btn-success load-comments" author-name="'+author.authName+'" author-id="'+author.id+'"" book-name="'+ book.bookName +'">Comments</button>'
+                        '<button class="btn btn-success load-comments" author-name="'+author.authName+'" author-id="'+author.id+'"" book-name="'+ book.bookName +'">Comments</button><br>'
+                    ));
+
+                    $( '#book-'+count+'-'+author.id ).append( $( 
+                        '<button class="btn btn-favourite"  author-name="'+author.authName+'" author-id="'+author.id+'"" book-name="'+ book.bookName +'"><i class="fa fa-star" aria-hidden="true"></i></button>'
                     ));
 
                     count++;

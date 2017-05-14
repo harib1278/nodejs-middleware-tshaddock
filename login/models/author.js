@@ -36,5 +36,11 @@ var Author = mongoose.Schema({
     }]
 });
 
+var Author = module.exports = mongoose.model('Author', Author);
 
-var User = module.exports = mongoose.model('Author', Author);
+// functions below
+module.exports.createAuthor = function(newAuthor, callback){
+    
+    newAuthor.save(callback);
+
+}
