@@ -21,8 +21,7 @@ users
 authors  
   
 ## Install dependencies
-composer install  
--- To get and install composer go to: https://getcomposer.org/  
+npm install  
    
 ## Start the application servers  
 node app  
