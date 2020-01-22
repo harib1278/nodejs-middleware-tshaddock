@@ -66,16 +66,6 @@ The UI design comes from a Bootstrap template called 'FreeLancer', it can be dow
 - PUT /author/book/addcomment - responsible for adding a comment to a book object  
 - PUT /author/book/addfavorite - responsible for adding a user favorite option to a book object (not working correctly)  
   
-## Problems  
-- Initially until discovering the CORS module I had lots of problems with accessing API data from the main application server.  
-- The user login and register functionality was by far the hardest part of this entire project and thus consumed the overwhelming amount of time spent. I didn't really feel the course prepared me for the complexity of doing this in nodejs having had to learn it by myself instead.  
-- I ran out of time when debugging the last route (the favoriting mechanism), I left the mostly complete code in anyway for the marker to reference, I was trying to save the unique username to the BookRating attribute of the Book object. The page then on load would have cross referenced this with username of the logged in user, if they matched then the start of the favoited book would be coloured black to indicate the book was a favorite and had been loaded from a saved choice.  
-  
-## Conclusion 
-This project took an overwhelming amount of time to complete, I had lots of issues with the amount of time commited to this project and it was a struggle to juggle around my other Uni and Work commitments. It was mostly the sheer amount that I had to teach myself to complete it to a semi satisfactory standard - had I not had quite a bit of javascript experience outside of Birkbeck I do not think this project could have been completed.  
-  
-Overall it was a good learning project and I now feel I have a solid grip of what coding middleware applications on nodeJs encompasses.  
-  
 ## composer dependencies:  
 "bcryptjs": "*",  
 "body-parser": "*",  
